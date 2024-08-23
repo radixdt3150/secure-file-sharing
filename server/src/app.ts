@@ -5,6 +5,9 @@ import { createServer, Server } from 'http';
 // Routing
 import { assembleRoutes } from './routes';
 
+// DB
+import dbHandler from "./database"
+
 // Application class
 class App {
     private expressApp: Application;
@@ -14,7 +17,9 @@ class App {
         this.expressApp = express();
         this.initHttpServer();
 
-        this.mountRoutes()
+        this.mountRoutes();
+
+        this.dbConnect();
     }
 
     initHttpServer(): void {
@@ -29,6 +34,14 @@ class App {
         const router = Router();
         assembleRoutes(router);
         this.expressApp.use('/api/', router); // api routes
+    }
+
+    dbConnect(): void {
+        try {
+            dbHandler.connect();
+        } catch {
+            dbHandler.disconnect();
+        }
     }
 }
 
