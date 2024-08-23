@@ -16,6 +16,7 @@ class App {
     constructor() {
         this.expressApp = express();
         this.initHttpServer();
+        this.parseRequestBody();
 
         this.mountRoutes();
 
@@ -42,6 +43,11 @@ class App {
         } catch {
             dbHandler.disconnect();
         }
+    }
+
+    parseRequestBody(): void {
+        this.expressApp.use(express.urlencoded({ extended: true }));
+        this.expressApp.use(express.json());
     }
 }
 

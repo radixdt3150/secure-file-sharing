@@ -1,7 +1,7 @@
 // Typescript uses this file to configure its compiler options
 {
   "compilerOptions": {
-      "baseUrl": "./src",
+      "baseUrl": ".",
       "target": "es2020" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
       /* Modules */
       "module": "commonjs" /* Specify what module code is generated. */,

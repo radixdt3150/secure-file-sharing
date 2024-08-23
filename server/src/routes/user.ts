@@ -6,6 +6,6 @@ import { userRegisterSchema } from '../validation/schema';
 
 export default function (router: Router) {
     // public routes
-    router.get('/user/register', userRegisterSchema, userController.register);
+    router.post('/user/register', userRegisterSchema, userController.register);
     // router.post('/user/login', userLoginSchema, userController.login);
 };
