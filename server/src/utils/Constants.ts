@@ -12,3 +12,6 @@ export const STATUS_CODE = {
     CLIENT_ERROR: 400,
     INTERNAL_SERVER_ERROR: 500
 };
+
+export const JWT_ISSUER = process.env.JWT_ISSUER as string;
+export const SECRET = process.env.SECRET as string;

@@ -1,5 +1,9 @@
+import * as jwt from 'jsonwebtoken';
+
 import User, { IUser } from "../models/User";
 
+// Utils
+import { JWT_ISSUER, SECRET } from "../utils/Constants";
 
 class UserService {
     /**
@@ -15,7 +19,7 @@ class UserService {
         userFields.password = hashedPassword;
         user = new User(userFields);
         await user.save();
-        
+
         return user;
     }
 
@@ -32,6 +36,32 @@ class UserService {
         }
 
         return result;
+    }
+
+    /**
+     * @param {string} email
+     * @param {string} password
+     * @returns {any} matched user
+     * @desc -  matches user with given credentials or null
+     */
+    attemptLogin = async (email: string, password: string): Promise<any> => {
+        const user = await User.findOne({ email });
+        if (user && User.validatePassword(password, user?.password, user?.salt)) {
+            return user;
+        }
+        return null;
+    }
+
+    /**
+     * @param { _id: string } payload
+     * @returns - JWT signed token
+     */
+    generateToken = (payload: { _id: string }, expiresIn: string) => {
+        const options = {
+            expiresIn,
+            issuer: JWT_ISSUER
+        }
+        return jwt.sign(payload, SECRET, options);
     }
 
 }

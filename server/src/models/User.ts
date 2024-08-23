@@ -26,7 +26,7 @@ export type PasswordSet = { salt: string, hashedPassword: string };
 
 interface UserModel extends Model<IUser, {}, IUserMethods> {
     generatePassword: (rawPassword: string) => PasswordSet;
-    validatePassword: (rawPassword: string, hashedPassword: string) => boolean;
+    validatePassword: (rawPassword: string, hashedPassword: string, salt: string) => boolean;
 }
 
 // User schema definition
@@ -66,15 +66,17 @@ userSchema.statics.generatePassword = function (rawPassword: string): PasswordSe
 }
 
 // validates hashed password
-userSchema.statics.validatePassword = function (rawPassword: string, hashedPassword: string): boolean {
-    return false;
+userSchema.statics.validatePassword = function (rawPassword: string, hashedPassword: string, salt: string): boolean {
+    const computedHash = pbkdf2Sync(rawPassword, salt, 100000, 64, 'sha512').toString('hex');
+
+    return computedHash === hashedPassword;
 }
 
 // Static methods on schema - ends
 
 // Instance methods - starts
 
-userSchema.methods.toJSON = function (fieldKey: string) {
+userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();
 

@@ -2,10 +2,10 @@
 import type { Router } from 'express';
 
 import userController from "../controllers/user";
-import { userRegisterSchema } from '../validation/schema';
+import { userRegisterSchema, userLoginSchema } from '../validation/schema';
 
 export default function (router: Router) {
     // public routes
     router.post('/user/register', userRegisterSchema, userController.register);
-    // router.post('/user/login', userLoginSchema, userController.login);
+    router.post('/user/login', userLoginSchema, userController.login);
 };
