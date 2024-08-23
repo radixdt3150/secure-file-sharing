@@ -1,4 +1,6 @@
 // top level imports
+import { pbkdf2Sync, randomBytes } from 'crypto';
+
 // mongoose lib
 import { Document, Schema, model, Model } from 'mongoose';
 
@@ -8,6 +10,7 @@ export interface IUser {
     name: string;
     email: string;
     password: string;
+    salt: string;
 
     makeHidden?: () => void
 };
@@ -19,8 +22,10 @@ interface IUserMethods {
     makeHidden: (fieldKey: string) => any;
 }
 
+export type PasswordSet = { salt: string, hashedPassword: string };
+
 interface UserModel extends Model<IUser, {}, IUserMethods> {
-    generatePassword: (rawPassword: string) => string;
+    generatePassword: (rawPassword: string) => PasswordSet;
     validatePassword: (rawPassword: string, hashedPassword: string) => boolean;
 }
 
@@ -41,13 +46,23 @@ const userSchema = new Schema<UserSchema>({
         type: String,
         required: true,
     },
+
+    salt: {
+        type: String,
+        required: true,
+    },
 });
 
 // Static methods on schema - starts
 
 // generates hashed password
-userSchema.statics.generatePassword = function (rawPassword: string): string {
-    return 'random password'
+userSchema.statics.generatePassword = function (rawPassword: string): PasswordSet {
+    // salt doesn't contain any sensitive data that can identify the user
+    // hence it can be stored in DB in plain text
+    const salt = randomBytes(16).toString('hex');
+
+    const hashedPassword = pbkdf2Sync(rawPassword, salt, 100000, 64, 'sha512').toString('hex');
+    return { salt, hashedPassword }
 }
 
 // validates hashed password
@@ -59,10 +74,15 @@ userSchema.statics.validatePassword = function (rawPassword: string, hashedPassw
 
 // Instance methods - starts
 
-userSchema.methods.makeHidden = function (fieldKey: string) {
-    const r = this.lean();
-    delete r[fieldKey];
-    return r;
+userSchema.methods.toJSON = function (fieldKey: string) {
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.salt;
+    
+    return userObject;
+
 }
 
 

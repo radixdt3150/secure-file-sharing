@@ -10,9 +10,12 @@ class UserService {
     createUser = async (userFields: IUser): Promise<any> => {
         let user = null;
         // instantiate user model and save
-        userFields.password = User.generatePassword(userFields.password);
+        const { salt, hashedPassword } = User.generatePassword(userFields.password);
+        userFields.salt = salt;
+        userFields.password = hashedPassword;
         user = new User(userFields);
         await user.save();
+        
         return user;
     }
 
