@@ -1,25 +1,26 @@
 // Express lib
 import { Response, Request } from 'express';
 
-// express-validator lib
-// import { validationResult } from 'express-validator';
+import { Types } from 'mongoose';
 
 // Services
 import type { FileServiceType } from '../services/file';
 import fileServ from "../services/file";
-
+import userServ from "../services/user";
 
 // Utils
 import { STATUS_CODE, STATUS } from "../utils/Constants";
-// import { errorTranformation } from '../utils/Common';
+import { IFile } from '../models/File';
 
 class FileController {
     // Data members
-    private fileService;
+    private readonly fileService;
+    private readonly userService;
 
     // Dependency injection in constructor
-    constructor(fileService: FileServiceType) {
+    constructor(fileService: FileServiceType, userService: any) {
         this.fileService = fileService;
+        this.userService = userService
     }
 
 
@@ -32,7 +33,26 @@ class FileController {
         let httpStatus = STATUS_CODE.OK;
 
         try {
-           res.send("File upload route")
+            const { userId = '' } = req.params;
+
+            if (userId && Types.ObjectId.isValid(userId)) {
+                const toBeAddedFiles = (req.files as Array<Express.Multer.File>).map((mFile: Express.Multer.File): Partial<IFile> => {
+                    return {
+                        name: mFile.filename,
+                        path: mFile.path,
+                        size: mFile.size,
+                        type: mFile.originalname.split('.').at(-1)
+                    }
+                });
+
+                await this.fileService.addFiles(toBeAddedFiles);
+                response.data = "File(s) uploaded successfully";
+            } else {
+                // error post with given id does not exists
+                response.status = STATUS.ERROR;
+                response.data = 'User not found!';
+                httpStatus = STATUS_CODE.CLIENT_ERROR;
+            }
         } catch (e) {
             response.status = STATUS.ERROR;
             response.data = null;
@@ -45,4 +65,4 @@ class FileController {
     }
 }
 
-export default new FileController(fileServ);
+export default new FileController(fileServ, userServ);
