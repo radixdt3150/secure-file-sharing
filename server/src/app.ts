@@ -1,6 +1,7 @@
 // common package imports
 import express, { Application, Router } from 'express';
 import { createServer, Server } from 'http';
+import cookieParser from 'cookie-parser';
 
 // Routing
 import { assembleRoutes } from './routes';
@@ -17,6 +18,7 @@ class App {
         this.expressApp = express();
         this.initHttpServer();
         this.parseRequestBody();
+        this.parseCookies();
 
         this.mountRoutes();
 
@@ -48,6 +50,10 @@ class App {
     parseRequestBody(): void {
         this.expressApp.use(express.urlencoded({ extended: true }));
         this.expressApp.use(express.json());
+    }
+
+    parseCookies = (): void => {
+        this.expressApp.use(cookieParser());
     }
 }
 
