@@ -13,7 +13,7 @@ import { errorTranformation } from '../utils/Common';
 
 class UserController {
     // Data members
-    private userService;
+    private readonly userService;
 
     // Dependency injection in constructor
     constructor(userService: any) {
@@ -22,7 +22,7 @@ class UserController {
 
 
     public register = async (req: Request, res: Response): Promise<void> => {
-        // Reponse Object
+        // Response Object
         const response: { status: string, data: any } = {
             status: STATUS.SUCCESS,
             data: null
@@ -62,7 +62,7 @@ class UserController {
     }
 
     public login = async (req: Request, res: Response): Promise<void> => {
-        // Reponse Object
+        // Response Object
         const response: { status: string, data: any } = {
             status: STATUS.SUCCESS,
             data: null
