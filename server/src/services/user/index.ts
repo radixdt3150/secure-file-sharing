@@ -1,9 +1,9 @@
 import * as jwt from 'jsonwebtoken';
 
-import User, { IUser } from "../models/User";
+import User, { IUser } from "../../models/User";
 
 // Utils
-import { JWT_ISSUER, SECRET } from "../utils/Constants";
+import { JWT_ISSUER, SECRET } from "../../utils/Constants";
 
 class UserService {
     /**
@@ -18,8 +18,8 @@ class UserService {
         userFields.salt = salt;
         userFields.password = hashedPassword;
         user = new User(userFields);
-        await user.save();
-
+        user = await user.save();
+        
         return user;
     }
 

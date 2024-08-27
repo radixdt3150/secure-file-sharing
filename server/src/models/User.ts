@@ -15,7 +15,7 @@ export interface IUser {
     makeHidden?: () => void
 };
 
-interface UserSchema extends Document, IUser {
+export interface UserSchema extends Document, IUser {
 };
 
 interface IUserMethods {
