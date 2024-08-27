@@ -2,8 +2,12 @@
 import File, { IFile } from "../models/File";
 
 class FileService {
-    async addFiles(files: Array<Partial<IFile>>) {
+    async addFilesToDB(files: Array<Partial<IFile>>): Promise<void> {
         await File.create(files);
+    }
+
+    async encryptFiles(): Promise<void> {
+        
     }
 }
 

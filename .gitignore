@@ -131,4 +131,4 @@ dist
 
 # Server uploads
 server/public/
-server/private/
+server/storage/

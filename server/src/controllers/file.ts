@@ -33,19 +33,22 @@ class FileController {
         let httpStatus = STATUS_CODE.OK;
 
         try {
-            const { userId = '' } = req.params;
+            const userId = req.body.decoded._id;
 
             if (userId && Types.ObjectId.isValid(userId)) {
-                const toBeAddedFiles = (req.files as Array<Express.Multer.File>).map((mFile: Express.Multer.File): Partial<IFile> => {
+                const toBeAddedFiles = (req.files as Array<Express.Multer.File>)
+                .map((mFile: Express.Multer.File): Partial<IFile> => {
                     return {
                         name: mFile.filename,
+                        owner: userId,
                         path: mFile.path,
                         size: mFile.size,
-                        type: mFile.originalname.split('.').at(-1)
+                        type: mFile.originalname.split('.').at(-1),
+                        originalName: mFile.originalname
                     }
                 });
 
-                await this.fileService.addFiles(toBeAddedFiles);
+                await this.fileService.addFilesToDB(toBeAddedFiles);
                 response.data = "File(s) uploaded successfully";
             } else {
                 // error post with given id does not exists

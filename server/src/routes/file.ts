@@ -7,5 +7,5 @@ import { fileUpload } from '../middleware/fileUpload';
 import fileController from '../controllers/file';
 
 export default function (router: Router) {
-    router.post('/user/:userId/file/upload', fileUpload.array('files', 10), verifyToken, fileController.upload);
+    router.post('/file/upload', fileUpload.array('files', 10), verifyToken, fileController.upload);
 };
