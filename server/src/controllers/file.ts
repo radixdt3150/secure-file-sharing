@@ -15,12 +15,12 @@ import { IFile } from '../models/File';
 class FileController {
     // Data members
     private readonly fileService;
-    private readonly userService;
+    // private readonly userService;
 
     // Dependency injection in constructor
     constructor(fileService: FileServiceType, userService: any) {
         this.fileService = fileService;
-        this.userService = userService
+        // this.userService = userService
     }
 
 
@@ -47,7 +47,7 @@ class FileController {
                         originalName: mFile.originalname
                     }
                 });
-
+                
                 await this.fileService.addFilesToDB(toBeAddedFiles);
                 response.data = "File(s) uploaded successfully";
             } else {
