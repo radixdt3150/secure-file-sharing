@@ -1,5 +1,6 @@
 module.exports = {
     env: {
+        "jest/globals": true,
         node: true,
         es2021: true,
     },
@@ -9,7 +10,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['@typescript-eslint'],
+    plugins: ['@typescript-eslint', 'jest'],
     rules: {
         'no-var': 'error',
         semi: 'off',
