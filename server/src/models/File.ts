@@ -1,5 +1,5 @@
 // mongoose lib
-import { Document, Schema, model, Model, SchemaType } from 'mongoose';
+import { Document, Schema, model, Model, SchemaType, Types } from 'mongoose';
 
 export interface IFile {
     name: string;
@@ -13,7 +13,7 @@ export interface IFile {
     sharedWith?: SchemaType[];
 };
 
-interface FileSchema extends Document, IFile {}
+interface FileSchema extends Document<Types.ObjectId>, IFile {}
 
 interface FileModel extends Model<IFile> {}
 

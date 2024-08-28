@@ -1,5 +1,5 @@
 
-import File, { IFile } from "../models/File";
+import File, { IFile } from "../../models/File";
 
 class FileService {
     async addFilesToDB(files: Array<Partial<IFile>>): Promise<void> {
