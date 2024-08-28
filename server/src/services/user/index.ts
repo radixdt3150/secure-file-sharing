@@ -46,6 +46,7 @@ class UserService {
      */
     attemptLogin = async (email: string, password: string): Promise<any> => {
         const user = await User.findOne({ email });
+        
         if (user && User.validatePassword(password, user?.password, user?.salt)) {
             return user;
         }
