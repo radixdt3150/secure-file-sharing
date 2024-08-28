@@ -4,13 +4,13 @@ import { Response, Request } from 'express';
 import { Types } from 'mongoose';
 
 // Services
-import type { FileServiceType } from '../services/file';
-import fileServ from "../services/file";
-import userServ from "../services/user";
+import type { FileServiceType } from '../../services/file';
+import fileServ from "../../services/file";
+import userServ from "../../services/user";
 
 // Utils
-import { STATUS_CODE, STATUS } from "../utils/Constants";
-import { IFile } from '../models/File';
+import { STATUS_CODE, STATUS } from "../../utils/Constants";
+import { IFile } from '../../models/File';
 
 class FileController {
     // Data members

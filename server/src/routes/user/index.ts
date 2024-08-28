@@ -1,9 +1,9 @@
 // Express Router
 import type { Router } from 'express';
 
-import userController from "../controllers/user";
-import { userRegisterSchema, userLoginSchema } from '../validation/schema';
-import { verifyToken } from '../middleware/verifyToken';
+import userController from "../../controllers/user";
+import { userRegisterSchema, userLoginSchema } from '../../validation/schema';
+import { verifyToken } from '../../middleware/verifyToken';
 
 export default function (router: Router) {
     // public routes

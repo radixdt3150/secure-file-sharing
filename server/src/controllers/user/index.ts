@@ -5,11 +5,11 @@ import { Response, Request } from 'express';
 import { validationResult } from 'express-validator';
 
 // Services
-import userServ from "../services/user";
+import userServ from "../../services/user";
 
 // Utils
-import { STATUS_CODE, STATUS } from "../utils/Constants";
-import { errorTranformation } from '../utils/Common';
+import { STATUS_CODE, STATUS } from "../../utils/Constants";
+import { errorTranformation } from '../../utils/Common';
 
 class UserController {
     // Data members
