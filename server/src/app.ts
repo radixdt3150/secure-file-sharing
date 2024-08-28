@@ -6,9 +6,6 @@ import cookieParser from 'cookie-parser';
 // Routing
 import { assembleRoutes } from './routes';
 
-// DB
-import dbHandler from "./database"
-
 // Application class
 class App {
     private expressApp: Application;
@@ -21,8 +18,6 @@ class App {
         this.parseCookies();
 
         this.mountRoutes();
-
-        this.dbConnect();
     }
 
     initHttpServer(): void {
@@ -33,18 +28,14 @@ class App {
         return this.httpServer;
     }
 
+    getExpressApp(): Application {
+        return this.expressApp;
+    }
+
     mountRoutes(): void {
         const router = Router();
         assembleRoutes(router);
         this.expressApp.use('/api/', router); // api routes
-    }
-
-    dbConnect(): void {
-        try {
-            dbHandler.connect();
-        } catch {
-            dbHandler.disconnect();
-        }
     }
 
     parseRequestBody(): void {
@@ -60,3 +51,5 @@ class App {
 const app = new App();
 
 export default app.getHttpServer();
+export const expressApp = app.getExpressApp();
+

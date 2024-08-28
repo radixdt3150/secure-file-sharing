@@ -12,7 +12,7 @@ const options = {
 
 // Establish connection with mongoDB
 const connect = () => {
-    mongoose.connect(mongoURI, options)
+    return mongoose.connect(mongoURI, options)
         .then(() => {
             console.log('✅ ✅ ✅ --- Mongo DB connected --- ✅ ✅ ✅');
         })
@@ -23,10 +23,10 @@ const disconnect = () => {
     if (!mongoose.connection) {
         return;
     }
-    mongoose.disconnect();
     mongoose.connection.once('close', async () => {
         console.log('Disconnected from database');
     });
+    return mongoose.disconnect();
 }
 
 export default {

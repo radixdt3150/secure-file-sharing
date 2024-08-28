@@ -21,7 +21,7 @@ export function errorTranformation(errorsArray: Partial<ValidationErrorResult>[]
     return errorsArray.reduce((acc: { [k: string]: string }[], curr: any) => {
         // eslint-disable-next-line no-prototype-builtins
         if (!acc.some((rule: any) => rule.hasOwnProperty(curr.param))) {
-            acc.push({ [curr.param]: curr.msg });
+            acc.push({ [curr.path]: curr.msg });
         }
         return acc;
     }, []);
