@@ -29,7 +29,7 @@ export default function Page(): ReactElement {
                 <Button type="submit">Submit</Button>
             </form>
 
-            <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-4 text-center">
+            <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-4">
                 Don’t have an account yet? <Link href="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
             </p>
         </main>
