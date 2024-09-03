@@ -27,7 +27,7 @@ export default function RootLayout({
             <body className={clsx([inter.className, 'bg-white dark:bg-gray-900'])}>
                 <Flowbite>
                     <Header />
-                    {children}
+                    <div id="app-container">{children}</div>
                 </Flowbite>
             </body>
         </html>

@@ -8,6 +8,10 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+html, body {
+    overflow-y: hidden;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -20,4 +24,17 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+#app-container {
+    transition-property: opacity, background-color, transform, filter;
+    transition-timing-function: ease-in-out;
+    transition-duration: 500ms;
+}
+
+.page-transition {
+    opacity: 0;
+    background-color: #000;
+    transform: translateY(40px);
+    filter: blur(12px);
 }

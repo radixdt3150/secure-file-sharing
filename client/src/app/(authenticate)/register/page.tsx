@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
-import Link from 'next/link'
+
+import { TransitionLink } from "@/app/components/atoms/TransitionLink";
 
 import { Button, Label, TextInput } from "flowbite-react";
 
@@ -42,7 +43,7 @@ export default async function Page(): Promise<ReactElement> {
 
             <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-4">
                 Already have an account?&nbsp;
-                <Link href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
+                <TransitionLink href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</TransitionLink>
             </p>
         </main>
     )
