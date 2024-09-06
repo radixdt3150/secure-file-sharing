@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { ThemeModeScript, Flowbite } from "flowbite-react";
 import clsx from "clsx";
 import "./globals.css";
@@ -29,6 +30,13 @@ export default function RootLayout({
                     <Header />
                     <div id="app-container">{children}</div>
                 </Flowbite>
+
+                {process.env.NODE_ENV === "development" && (
+                    <Script
+                        src="/startMockService.js"
+                        strategy="afterInteractive"
+                    />
+                )}
             </body>
         </html>
     );

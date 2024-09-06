@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
+// Subject component
 import Page from './page'
 
 jest.mock('next/navigation', () => {
@@ -12,6 +13,7 @@ jest.mock('next/navigation', () => {
     }
 })
 
+// Test Suites
 describe('Login Page', (): void => {
     
     test('Renders heading', (): void => {
@@ -106,5 +108,26 @@ describe('Login Page', (): void => {
             expect(emailErr).not.toBeInTheDocument();
             expect(passwordErr).not.toBeInTheDocument();
         })
+    })
+
+    test('API returns with expected response', async (): Promise<void> => {
+        // Data
+        const validEmail = 'john@doe.com', validPassword = "Password123";
+
+        // Arrange
+        render(<Page />);
+        const user = userEvent.setup(); // Initialize user-event
+
+        // Query elements
+        const email: HTMLInputElement = screen.getByTestId('email');
+        const password: HTMLInputElement = screen.getByTestId('password');
+        const submitBtn = screen.getByTestId('submit-btn');
+
+        // Act
+        await user.type(email, validEmail);
+        await user.type(password, validPassword);
+        await user.click(submitBtn);
+
+        // Assert
     })
 })
